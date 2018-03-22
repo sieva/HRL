@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title></title>
+        <style>
+            tr{ margin-bottom: 5px;
+                margin-bottom: 5px}
+            input [select] { margin-bottom: 5px}
+
+
+        </style>
+
+    </h:head>
+    <h:body>
+        <h2>LIST OF USERS REGISTERED:</h2>
+                
+        <h:form>
+
+            <p:inputText value="#{mo.skey}" placeholder="Search...">
+                <p:ajax event="keyup"  listener="#{user.serchUser()}" update="tab"/>
+
+            </p:inputText>
+            <p:messages closable="true" showIcon="true"/>
+            <p:dataTable id="tab" value="#{user.listUsers}"  var="s">
+                
+                <p:column headerText="#" style="width: 4px">        
+                    <h:outputText value="#{user.listUsers.indexOf(s)+1}"/>
+                </p:column>
+                <p:column headerText="Username">        
+                    <h:outputText value="#{s.username}"/>
+                </p:column>
+
+                <p:column headerText="Full name">        
+                   #{s.fullname}
+                </p:column>
+                <p:column headerText="Gender">        
+                    <h:outputText value="#{s.gender}"/>
+                </p:column>
+
+                <p:column headerText="Address">        
+                    <h:outputText value="#{s.address}"/>
+                </p:column>
+
+                <p:column headerText="Reg Date">        
+                    <h:outputText value="#{s.dob}"/>
+                </p:column>
+                <p:column headerText="Date of birth">        
+                    <h:outputText value="#{s.dob}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

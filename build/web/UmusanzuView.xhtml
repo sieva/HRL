@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+           <link href='style666.css' rel='stylesheet' />
+        <title></title>
+         <script src="js/bootstrap.min.js"></script>
+             <script src="jquery-1.10.2.js"></script>
+         <!--      <script>
+                 $(document).ready(
+                           function () {
+                               setInterval(doAjax, 5000);
+                           }
+                   );
+       
+                   function doAjax() {
+                       $("#dd").load("UmusanzuView.xhtml");
+                   }
+       
+               </script>   -->
+        
+        <style>
+            tr{ margin-bottom: 5px;
+                margin-bottom: 5px}
+            input [select] { margin-bottom: 5px}
+
+                 body{
+                background:url('pictures/moto8.bmp');
+                background-repeat: repeat-x;
+                background-size:cover;
+                font-family: Arial;
+                color: white;
+            }
+           
+        </style>
+
+    </h:head>
+    <h:body>
+       <h:form id="dd">
+                    <h2>LIST OF UMUSANZU:</h2>
+                    <br/>
+                   <h:commandButton style="width: 10%;height:40px; background: #ff6315;" value="Daily Report" action="UmusoroReport.jsp"/>
+                     &nbsp; <h:commandButton style="width: 10%;height:40px; background: #ff6315;" value="Mounthly Report" action="UmusoroReport_1.jsp"/>
+                    &nbsp;   <p:inputText value="#{um2.skey}" placeholder="Search..." style="width: 20%">
+                        <p:ajax event="keyup"  listener="#{um2.serchUmusanzu()}" update="tab"/>
+                    </p:inputText>
+
+
+                    <p:dataTable id="tab" value="#{um2.listUmusanzu}"  var="s">
+
+                        <p:column headerText="#" style="width: 20px">        
+                            <h:outputText value="#{um2.listUmusanzu.indexOf(s)+1}"/>
+                        </p:column>
+                        <p:column headerText="Motard Permit No">        
+                            #{s.motari} 
+                        </p:column>
+                        <p:column headerText="Motard Names">        
+                            #{s.motari.fname}  #{s.motari.lname} 
+                        </p:column>
+
+                        <p:column headerText="Plate No">        
+                            <h:outputText value="#{s.plateNo}"/>
+                        </p:column>
+                        <p:column headerText="Association">        
+                            <h:outputText value="#{s.motari.motoo.association}"/>
+                        </p:column>
+                        <p:column headerText="Deposit Date">        
+                            #{s.formatDeposDate()}
+                        </p:column>
+
+                        <p:column headerText="Uwishyuye">        
+                            <h:outputText value="#{s.uwishyura}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Amount" style="font-style: oblique; font-family: Arial ;width: 15%; color:ghostwhite ; background: coral; font-weight: bold; font-size:20px ; text-align: right; ">
+                      #{s.decAmount()}
+
+                      <f:facet name="footer">
+                                <c:set var="total" value=""/>
+                                Total &nbsp; =#{um2.decTotalFormat()}
+                            </f:facet>
+                        </p:column>
+                        <span id="val"></span>
+
+                    </p:dataTable>
+                </h:form>
+    </h:body>
+</html>
+

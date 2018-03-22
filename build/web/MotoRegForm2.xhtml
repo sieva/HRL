@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <!-- <script src="myJs.js"></script> -->
+       <style>
+           body{
+                     background-image: url(pictures/moto12.bmp);
+           }
+       </style>
+        <link href='style.css' rel='stylesheet' />
+        <title>MotardMIS </title>
+    </h:head>
+    <h:body>
+
+        <center>
+            <div>
+                <h:form style="width: 100%;height: 20%; background: #ff6315;padding-bottom: 10px;">
+                    <h4 id="jj">HELP/SMART LIFE REFLEXOLOGY AND MASSAGE CENTRE</h4>
+<h3>For Staff only.</h3>
+                    <p:commandButton class="yy" value="USER " action="UserRegForm.xhtml"/> 
+                    <p:commandButton class="yy" value="ASSOCIATION " action="AssociationRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="MOTO " action="MotoRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="MOTARD " action="MotardRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="UMUSANZU " action="UmusanzuRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="LOG OUT " action="Login.xhtml" onclick=" return confirm('Are you sure to Logout of the System?}')"/> 
+
+                </h:form>
+
+                <h1>MOTO REGISTRATION FORM:</h1>
+
+                <h:form id="tab">
+                    <p:growl id="msg"/>
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="Plate No: " />
+                        <p:inputText id="plateno" value="#{m2.mt.plate_no}" title="Format:RA123B" required="true" requiredMessage="Enter Plate no: Format:RA123B">
+                             <f:validateLength minimum="6" maximum="6"/>
+                              <f:validateRegex pattern="[A-Z]{2}[0-9]{3}[A-Z]{1}+"/>
+                        </p:inputText>
+                         <p:message for="plateno" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Owner"/>
+                        <p:inputText id="ow" value="#{m2.mt.owner}" required="true" requiredMessage="Enter Owner's name:">
+                             <f:validateLength minimum="2" maximum="30"/>
+                        </p:inputText>
+                           <p:message for="ow" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Insurance Company"/>
+                        <h:selectOneMenu id="ins"  value="#{m2.mt.insurance_company}"  required="true" requiredMessage="Select Insurance Company" >
+                            <f:selectItem itemLabel="--Select Insurence--" noSelectionOption="true" />
+                            <f:selectItem   itemLabel="PRIME"  itemValue="PRIME" />
+                            <f:selectItem   itemLabel="SONARWA"  itemValue="SONARWA"/>
+                            <f:selectItem   itemLabel="SOLAS"  itemValue="SOLAS"/>
+                        </h:selectOneMenu>
+                        <p:message for="ins" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Engine No"/>
+                        <p:inputText id="en" value="#{m2.mt.engine_no}" title="M123G123K" required="true" requiredMessage="Enter Engine No, (9 Characters).">
+                         <f:validateLength minimum="9" maximum="9"/>
+                        </p:inputText>
+                        <p:message for="en" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Manufacture Date"/>
+                        <p:calendar id="ca"  value="#{m2.mt.manuf_date}" navigator="true" required="true" requiredMessage="Select Manufacture Date"/>
+                        <p:message for="ca" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Association"/>
+                        <h:selectOneMenu id="as" value="#{m2.selectedAssociation}" required="true" requiredMessage="Select Association">
+                            <f:selectItem itemLabel="--Select Association--"  noSelectionOption="true"/>
+                            <f:selectItems  value="#{m2.association}"  var="assList" 
+                                            itemLabel="#{assList.ass_name}"  itemValue="#{assList.ass_name}"/>
+                        </h:selectOneMenu>
+                        <p:message for="as" style="background: violet; color: red;" display="true"/>
+
+
+
+                        &nbsp;  <p:commandButton update="@all" value="Register Moto" action="#{m2.registerMoto()}"/>
+                    </p:panelGrid>
+
+                </h:form>
+            </div>
+            <div id="one">
+                <h2>LIST OF MOTOS REGISTERED:</h2>
+                <h:form>
+                    <p:inputText value="#{m2.skey}" placeholder="Search...">
+                        <p:ajax event="keyup"  listener="#{m2.serchMoto()}" update="tab"/>
+
+                    </p:inputText>
+
+                    <p:dataTable id="tab" value="#{m2.listMoto}"  var="s">
+
+                        <p:column headerText="#" style="width: 20px">        
+                            <h:outputText value="#{m2.listMoto.indexOf(s)+1}"/>
+                        </p:column>
+                        <p:column headerText="Plate No">        
+                            <h:outputText value="#{s.plate_no}"/>
+                        </p:column>
+
+                        <p:column headerText="Owner">        
+                            <h:outputText value="#{s.owner}"/>
+                        </p:column>
+                        <p:column headerText="Association">        
+                            <h:outputText value="#{s.association}"/>
+                        </p:column>
+
+                        <p:column headerText="INSURENCE">        
+                            <h:outputText value="#{s.insurance_company}"/>
+                        </p:column>
+
+                        <p:column headerText="Manufacture Date">        
+                            #{s.formatManufDate()}
+                        </p:column>
+                        <p:column headerText="Registration Date">        
+                            #{s.formatRegDate()}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+            <div style="background: #ff6315; height: 30px; text-align: center;" class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-text pull-left">
+                        <p>CopyRight©2017</p>
+                    </div>
+                </div>
+            </div>
+            <script src="js/bootstrap.min.js"></script>
+        </center>
+    </h:body>
+</html>
+

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title></title>
+        <style>
+            tr{ margin-bottom: 5px;
+                margin-bottom: 5px}
+            input [select] { margin-bottom: 5px}
+
+
+        </style>
+
+    </h:head>
+    <h:body>
+                   <h2>LIST OF ASSOCIATIONS OF MOTARD IN RWANDA:</h2>
+                <h:form id="twoo">
+                    <p:inputText value="#{ass.searchkey}" placeholder="Search...">
+                        <p:ajax event="keyup"  listener="#{ass.serchAssociation()}" update="tab"/>
+
+                    </p:inputText>
+
+                    <p:dataTable id="tab" value="#{ass.listAssociation}"  var="s" sortBy="#{s.ass_name}">
+
+                        <p:column headerText="#" style="width: 20px">        
+                            <h:outputText value="#{ass.listAssociation.indexOf(s)+1}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Association Name">        
+                            <h:outputText value="#{s.ass_name}"/>
+                        </p:column>
+
+                        <p:column headerText="Address">        
+                            <h:outputText value="#{s.address}"/>
+                        </p:column>
+                        <p:column headerText="Phone">        
+                            <h:outputText value="#{s.phone}"/>
+                        </p:column>
+
+                        <p:column headerText="Treasurer">        
+                            <h:outputText value="#{s.treas_name}"/>
+                        </p:column>
+
+                        <p:column headerText="Secretary">        
+                            <h:outputText value="#{s.secret_name}"/>
+                        </p:column>
+                        <p:column headerText="Registration Date">        
+                            #{s.formatCreateDate()}
+                        </p:column >
+
+                        <p:column style="width: 18%" headerText="Action" >
+                           
+                            <h:commandButton style="width: 40%" value="Edit" action="#{ass.editAssociation(s)}"/>
+                            &nbsp; <h:commandButton value="Delete" action="#{ass.deleteAssociation(s)}" onclick=" return confirm('Are you sure to delete Ass?')"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>  
+    </h:body>
+</html>
+

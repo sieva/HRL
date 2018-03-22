@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <!-- <script src="myJs.js"></script> -->
+       <style>
+           body{
+                     background-image: url(pictures/moto12.bmp);
+           }
+       </style>
+           <link href='style.css' rel='stylesheet' />
+        <title>MotardMIS </title>
+    </h:head>
+    <h:body>
+          <center>
+              <div>
+             <h:form style="width: 100%;height: 20%; background: #ff6315;padding-bottom: 10px;">
+                <h4 id="jj">HELP/SMART LIFE REFLEXOLOGY AND MASSAGE CENTRE</h4>
+         <h3>For Staff only.</h3>
+                <p:commandButton class="yy" value="USER " action="UserRegForm.xhtml"/> 
+                <p:commandButton class="yy" value="ASSOCIATION " action="AssociationRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="MOTO " action="MotoRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="MOTARD " action="MotardRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="UMUSANZU " action="UmusanzuRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="LOG OUT " action="Login.xhtml" onclick=" return confirm('Are you sure to Logout of the System?}')"/> 
+
+                </h:form>
+      
+            <h1>MOTARD REGISTRATION FORM:</h1>
+         
+            <h:form id="one"  style="width: 50%; margin: 30px auto;">
+               <p:growl id="msg"/>
+                <p:panelGrid columns="3">
+                    <p:outputLabel value="Permit No: " />
+                    <p:inputText id="permNo" value="#{mo2.mta.permit_no}" validatorMessage="Enter 16 Integer for Permit No and Respect RwandaNational ID and don't put space between." required="true" requiredMessage="Enter Permit No:">
+                         <f:validateLength minimum="16" maximum="16"/>
+                             <f:validateRegex pattern="1[0-9]{4}+[7,8]{1}[0-9]{7}[0-9]{1}[0-9]{2}"/>
+
+                        </p:inputText>
+                     <p:message for="permNo" style="background: violet; color: red;" display="true"/>
+                    <p:outputLabel value="First name"/>
+                    <p:inputText id="fn" value="#{mo2.mta.fname}" validatorMessage="Enter Last Name (Minimum is 2 characters" required="true" requiredMessage="Enter First Name">
+                    <f:validateLength minimum="2" maximum="40"/>
+                        </p:inputText>
+                     <p:message for="fn" style="background: violet; color: red;" display="true"/>
+                    <p:outputLabel value="Last name"/>
+                    <p:inputText id="ln" value="#{mo2.mta.lname}"  validatorMessage="Enter LastName (Minimum is 2 characters" required="true" requiredMessage="Enter Last Name">
+                     <f:validateLength minimum="2" maximum="40"/>
+                        </p:inputText>
+                     <p:message for="ln" style="background: violet; color: red;" display="true"/>
+                    <p:outputLabel value="Gender"/>
+                    <h:selectOneMenu id="gn" value="#{mo2.mta.gender}" validatorMessage="Select Gender" required="true" requiredMessage="Select Gender">
+                        <f:selectItem itemLabel="--Select Gender--" noSelectionOption="true" />
+                        <f:selectItem   itemLabel="Female"  itemValue="Female"/>
+                        <f:selectItem   itemLabel="Male"  itemValue="Male"/>
+                    </h:selectOneMenu>
+                     <p:message for="gn" style="background: violet; color: red;" display="true"/>
+                    <p:outputLabel value="Email "/>
+                    <p:inputText id="email" value="#{mo2.mta.email}" validatorMessage="Enter Email." required="true" requiredMessage="Enter Email ">
+                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
+                         <p:message for="email" style="background: violet; color: red;" display="true"/>
+                    
+                    <p:outputLabel value="Phone"/>
+                    <p:inputText id="ph" value="#{mo2.mta.phone}" validatorMessage="Incorrect Phone Number. [ex: 07xxxxxxxx] --> Ten integers." required="true" requiredMessage="Enter Phone">
+                    <f:validateLength minimum="10" maximum="10"/>
+                     <f:validateRegex pattern="07[2,3,8]{1}[0-9]{7}+"/>
+                        </p:inputText>
+                     <p:message for="ph" style="background: violet; color: red;" display="true"/>
+                     
+                    <p:outputLabel value="Date of birth"/>
+                    <p:calendar id="dob"  value="#{mo2.mta.dob}" validatorMessage="Select date of birth." navigator="true" required="true" requiredMessage="Select your dob"/>
+                    <p:message for="dob" style="background: violet; color: red;" display="true"/>
+                   
+                    <p:outputLabel value="Address"/>
+                    <p:inputText id="add" value="#{mo2.mta.address}" validatorMessage="Enter Address." required="true" requiredMessage="Enter Address">
+                        <f:validateLength minimum="3" maximum="30"/>
+                     <f:validateRegex pattern="[a-zA-Z]+"/>
+                        </p:inputText>
+                     <p:message for="add" style="background: violet; color: red;" display="true"/>
+
+                    <p:outputLabel value="Moto Plate No"/>
+                    <h:selectOneMenu id="moto_plateNo" value="#{mo2.selectedMoto}" validatorMessage="Select Plate No." required="true" requiredMessage="Select plateNo">
+                        <f:selectItem itemLabel="--Select Moto Plate No--"  noSelectionOption="true"/>
+                        <f:selectItems  value="#{mo2.moto}"  var="motosList" 
+                                        itemLabel="#{motosList.plate_no}"  itemValue="#{motosList.plate_no}"/>
+                    </h:selectOneMenu>
+                     <p:message for="moto_plateNo" style="background: violet; color: red;" display="true"/>
+
+                     &nbsp;  <p:commandButton update="@all" value="Register Motard" validateClient="true" action="#{mo2.registerMotard()}"/>
+
+                </p:panelGrid>
+
+            </h:form>
+              </div>
+             <div id="one">
+                  <h2>LIST OF MOTARDS REGISTERED:</h2>
+                
+        <h:form>
+
+            <p:inputText value="#{mo2.skey}" placeholder="Search...">
+                <p:ajax event="keyup"  listener="#{mo2.serchMotard()}" update="tab"/>
+
+            </p:inputText>
+            <p:dataTable id="tab" value="#{mo2.listMotard}"  var="s">
+                
+                <p:column headerText="#" style="width: 20px">        
+                    <h:outputText value="#{mo2.listMotard.indexOf(s)+1}"/>
+                </p:column>
+                <p:column headerText="Permit No">        
+                    <h:outputText value="#{s.permit_no}"/>
+                </p:column>
+
+                <p:column headerText="Names">        
+                    #{s.fname} #{s.lname}
+                </p:column>
+                <p:column headerText="Gender">        
+                    <h:outputText value="#{s.gender}"/>
+                </p:column>
+
+                <p:column headerText="Plate no">        
+                    <h:outputText value="#{s.motoo}"/>
+                </p:column>
+
+                <p:column headerText="Reg Date">        
+                   #{s.formatRegDate()}
+                </p:column>
+                
+                <p:column headerText="Phone">        
+                    <h:outputText value="#{s.phone}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>  
+              </div>
+              <div style="background: #ff6315; height: 30px; text-align: center;" class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-text pull-left">
+                        <p>CopyRight©2017</p>
+                    </div>
+                </div>
+            </div>
+            <script src="js/bootstrap.min.js"></script>
+        </center>
+    </h:body>
+</html>
+

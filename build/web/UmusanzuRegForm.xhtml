@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <!--       <script src="jquery-1.10.2.js"></script>
+               <script>
+                   $(document).ready(
+                           function () {
+                               setInterval(doAjax, 10000);
+                           }
+                   );
+       
+                   function doAjax() {
+                       $("#ff").load("UmusanzuView.xhtml");
+                   }
+       
+               </script> -->
+        <link href='style.css' rel='stylesheet' />
+        <title>MotardMIS </title>
+       <!-- <script src="myJs.js"></script> -->
+       <style>
+           body{
+                     background-image: url(pictures/moto5.bmp);
+           }
+       </style>
+    </h:head>
+    <h:body>
+        <center>
+            <div>
+                <h:form style="width: 100%;height: 20%; background: #ff6315;padding-bottom: 10px;">
+                    <h4 id="jj">HELP/SMART LIFE REFLEXOLOGY AND MASSAGE CENTRE</h4>
+
+                    <p:commandButton class="yy" value="ASSOCIATION " action="AssociationRegForm.xhtml"/> 
+                    <p:commandButton class="yy" value="MOTO " action="MotoRegForm.xhtml"/> 
+                    <p:commandButton class="yy" value="MOTARD " action="MotardRegForm.xhtml"/> 
+                    <p:commandButton class="yy" value="UMUSANZU " action="UmusanzuRegForm.xhtml"/> 
+                    <p:commandButton class="yy" value="LOG OUT " action="#{logout.logout()}" onclick=" return confirm('Are you sure to Logout of the System?')"/> 
+
+                </h:form>
+
+                <h1>UMUSANZU PAYMENT FORM:</h1>
+
+                <h:form id="one">
+                    <p:growl id="msg"/>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="UWISHYURA"/>
+                        <p:inputText value="#{um.umus.uwishyura}" required="true" requiredMessage="Enter NAMES:"/>
+                        <p:outputLabel value="Amount"/>
+                        <p:inputText value="#{um.umus.amount}" required="true" requiredMessage="Enter Amount"/>
+
+                        <p:outputLabel value="Permit Number"/>
+                        <h:selectOneMenu value="#{um.selectedMotard}" required="true" requiredMessage="Select permit Number">
+                            <f:selectItem itemLabel="--Select Permit No--"  noSelectionOption="true"/>
+                            <f:selectItems  value="#{um.motard}"  var="motardList" 
+                                            itemLabel="#{motardList.permit_no}" itemLabelEscaped="true"  itemValue="#{motardList.permit_no}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Plate No"/>
+                        <p:inputText value="#{um.umus.plateNo}" required="true" requiredMessage="Enter Receiver name"/>
+                        <p:outputLabel value="Receiver"/>
+                        <p:inputText value="#{um.umus.receiver}" required="true" requiredMessage="Enter Receiver name"/>
+
+
+                        &nbsp;  <p:commandButton update="@all" value="Register Moto" action="#{um.registerUmusanzu()}"/>
+                    </p:panelGrid>
+
+                </h:form>
+                <br/>
+            </div>
+            <div id="ff">
+                <h:form>
+                    <h2>LIST OF UMUSANZU:</h2>
+                    <br/>
+
+                    <p:inputText value="#{um.skey}" placeholder="Search...">
+                        <p:ajax event="keyup"  listener="#{um.serchUmusanzu()}" update="tab"/>
+                    </p:inputText>
+
+                    <p:dataTable id="tab" value="#{um.listUmusanzu}"  var="s">
+
+                        <p:column headerText="#" style="width: 20px">        
+                            <h:outputText value="#{um.listUmusanzu.indexOf(s)+1}"/>
+                        </p:column>
+                        <p:column headerText="Motard Permit No">        
+                            #{s.motari} 
+                        </p:column>
+                        <p:column headerText="Motard Names">        
+                            #{s.motari.fname}  #{s.motari.lname} 
+                        </p:column>
+
+                        <p:column headerText="Plate No">        
+                            <h:outputText value="#{s.plateNo}"/>
+                        </p:column>
+                        <p:column headerText="Association">        
+                            <h:outputText value="#{s.motari.motoo.association}"/>
+                        </p:column>
+                       
+                        <p:column headerText="Deposit Date">        
+                            #{s.formatDeposDate()}
+                        </p:column>
+
+                        <p:column headerText="Uwishyuye">        
+                            <h:outputText value="#{s.uwishyura}"/>
+                        </p:column>
+                         <p:column headerText="Amount">        
+                            <h:outputText value="#{s.amount}"/>
+                          </p:column>
+                                  
+                    </p:dataTable>
+                </h:form>
+            </div>
+            <div style="background: #ff6315; height: 30px; text-align: center;" class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-text pull-left">
+                        <p>CopyRight©2017</p>
+                    </div>
+                </div>
+            </div>
+            <script src="js/bootstrap.min.js"></script>
+        </center>
+    </h:body>
+</html>
+

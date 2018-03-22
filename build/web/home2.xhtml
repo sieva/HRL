@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+        <link href='style.css' rel='stylesheet' />
+        <style>
+            body{
+              /*  background:url('pictures/moto2.bmp') no-repeat;
+                background-size:cover;*/
+                font-family: Arial;
+                color: white;
+            }
+            #jj {
+                color: #0812f0;
+                 font-family: Arial;
+                  font-size:xx-large;
+                  font-style: oblique;
+                  font-weight: bold;
+                  max-height: 14px;
+                  padding-top: 10px;
+                  padding-bottom: 2px;
+            }
+            .yy{
+                font-size:x-large;
+                  font-style: oblique;
+                  font-weight: bold;
+            }
+            #msg{
+                color: tomato;
+            }
+
+        </style>
+
+ <!-- <script src="myJs.js"></script> -->
+       <style>
+           body{
+                     background-image: url(pictures/moto8.bmp);
+           }
+       </style>
+    
+        <title>MotardMIS</title>
+    </h:head>
+    <h:body>
+        <center>
+            <h:form id="one" style="width: 100%;height: 20%; background: #ff6315;padding-bottom: 10px;">
+                <h4 id="jj">HELP/SMART LIFE REFLEXOLOGY AND MASSAGE CENTRE</h4>
+                   <h3>For Staff only.</h3>
+                <p:commandButton class="yy" value="USER " action="UserRegForm.xhtml"/>            
+                <p:commandButton class="yy" value="ASSOCIATION " action="AssociationRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="MOTO " action="MotoRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="MOTARD " action="MotardRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="UMUSANZU " action="UmusanzuRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="LOG OUT " action="#{logout.logout()}" onclick=" return confirm('Are you sure to Logout of the System?')"/> 
+
+                <p:growl  id="msg"/>
+                </h:form>
+            
+           
+        </center>
+        
+    </h:body>
+    <div style="background: #ff6315; height: 30px; text-align: center;" class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-text pull-left">
+                        <p>CopyRight©2017</p>
+                    </div>
+                </div>
+            </div>
+            <script src="js/bootstrap.min.js"></script>
+</html>
+

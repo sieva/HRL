@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+       <!-- <script src="myJs.js"></script> -->
+       <style>
+           body{
+                     background-image: url(pictures/moto5.bmp);
+           }
+       </style>
+        <link href='style.css' rel='stylesheet' />
+        <title>MotardMIS </title>
+    </h:head>
+    <h:body>
+        <center>
+            <div>
+                <h:form style="width: 100%;height: 20%; background: #ff6315;padding-bottom: 10px;">
+                <h4 id="jj">HELP/SMART LIFE REFLEXOLOGY AND MASSAGE CENTRE</h4>
+         <h3>For Staff only.</h3>
+                <p:commandButton class="yy" value="USER " action="UserRegForm.xhtml"/> 
+                <p:commandButton class="yy" value="ASSOCIATION " action="AssociationRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="MOTO " action="MotoRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="MOTARD " action="MotardRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="UMUSANZU " action="UmusanzuRegForm2.xhtml"/> 
+                <p:commandButton class="yy" value="LOG OUT " action="Login.xhtml" onclick=" return confirm('Are you sure to Logout of the System?}')"/> 
+
+                </h:form>
+                
+                  <h1>ASSOCIATION REGISTRATION FORM:</h1>
+                <h:form id="one"  style="width: 25%;">
+                    <p:growl id="msg"/>
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="Association Name: " />
+                        <p:inputText id="assNm" value="#{ass2.assoc.ass_name}" validatorMessage="Minimum is 5 Characters." required="true" requiredMessage="Enter Association name:">
+                        <f:validateLength minimum="5" maximum="50"/>
+                        </p:inputText>
+                        <p:message for="assNm" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Address"/>
+                        <p:inputText id="add" value="#{ass2.assoc.address}" validatorMessage="Minimum is 3 Characters." required="true" requiredMessage="Enter Address:">
+                             <f:validateLength minimum="3" maximum="30"/>
+                        </p:inputText>
+                          <p:message for="add" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Phone"/>
+                        <p:inputText id="ph" value="#{ass2.assoc.phone}" required="true" requiredMessage="Enter valid phone no. Format[07XXXXXXXX]">
+                         <f:validateLength minimum="10" maximum="10"/>
+                         <f:validateRegex pattern="07[2,3,8]{1}[0-9]{7}+"/>
+                        </p:inputText>  
+                        <p:message for="ph" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Email"/>
+                        <p:inputText id="email" value="#{ass2.assoc.email}" validatorMessage="Invalid email format" required="true" requiredMessage="Enter valid Association Email">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
+                         <p:message for="email" style="background: violet; color: red;" display="true"/>
+
+                        <p:outputLabel value="President of Association"/>
+                        <p:inputText id="pres_ass" value="#{ass2.assoc.pres_name}" validatorMessage="Minimum is 3 Characters." required="true" requiredMessage="Enter Association President name">
+                         <f:validateLength minimum="3" maximum="30"/>
+                        </p:inputText>
+                        <p:message for="pres_ass" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Secreatary"/>
+                        <p:inputText id="sec" value="#{ass2.assoc.secret_name}" validatorMessage="Minimum is 3 Characters." required="true" requiredMessage="Enter Association Secreatary name">
+                             <f:validateLength minimum="3" maximum="30"/>
+                        </p:inputText>
+                          <p:message for="sec" style="background: violet; color: red;" display="true"/>
+                        <p:outputLabel value="Treasurer"/>
+                        <p:inputText id="tres" value="#{ass2.assoc.treas_name}" validatorMessage="Minimum is 3 Characters." required="true" requiredMessage="Enter Treasurer name:">
+                             <f:validateLength minimum="3" maximum="30"/>
+                        </p:inputText>
+                          <p:message for="tres" style="background: violet; color: red;" display="true"/>
+                        
+                        &nbsp;  <p:commandButton update="@all" value="Register Association" action="#{ass2.createAssociation()}"/>
+                    </p:panelGrid>
+                </h:form>
+            </div>
+             <div id="ff">
+                <h2>LIST OF ASSOCIATIONS OF MOTARD IN RWANDA:</h2>
+                <h:form>
+                    <p:inputText value="#{ass2.searchkey}" placeholder="Search...">
+                        <p:ajax event="keyup"  listener="#{ass2.serchAssociation()}" update="tab"/>
+
+                    </p:inputText>
+
+                    <p:dataTable id="tab" value="#{ass2.listAssociation}"  var="s">
+
+                        <p:column headerText="#" style="width: 20px">        
+                            <h:outputText value="#{ass2.listAssociation.indexOf(s)+1}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Association Name">        
+                            <h:outputText value="#{s.ass_name}"/>
+                        </p:column>
+
+                        <p:column headerText="Address">        
+                            <h:outputText value="#{s.address}"/>
+                        </p:column>
+                        <p:column headerText="Phone">        
+                            <h:outputText value="#{s.phone}"/>
+                        </p:column>
+
+                        <p:column headerText="Treasurer">        
+                            <h:outputText value="#{s.treas_name}"/>
+                        </p:column>
+
+                        <p:column headerText="Secretary">        
+                            <h:outputText value="#{s.secret_name}"/>
+                        </p:column>
+                        <p:column headerText="Registration Date">        
+                            #{s.formatCreateDate()}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>     
+            </div>
+<div style="background: #ff6315; height: 30px; text-align: center;" class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-text pull-left">
+                        <p>CopyRight©2017</p>
+                    </div>
+                </div>
+            </div>
+            <script src="js/bootstrap.min.js"></script>
+        </center>
+    </h:body>
+</html>
+

@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+         <script src="js/bootstrap.min.js"></script>
+             <script src="jquery-1.10.2.js"></script>
+              
+             
+             <style>
+                 body{
+                background:url('pictures/moto8.bmp');
+                background-repeat: repeat-x;
+                background-size:cover;
+                font-family: Arial;
+                color: white;
+            }
+                 </style>
+       
+        <link href='style.css' rel='stylesheet' />
+        <title>MotardMIS </title>
+ <!-- <script src="myJs.js"></script> -->
+       <style>
+           body{
+                     background-image: url(pictures/moto5.bmp);
+           }
+       </style>
+    </h:head>
+    <h:body>
+        <center>
+            <div>
+                <h:form style="width: 100%;height: 20%; background: #ff6315;padding-bottom: 10px;">
+                    <h4 id="jj">HELP/SMART LIFE REFLEXOLOGY AND MASSAGE CENTRE</h4>
+<h3>For Staff only.</h3>
+                    <p:commandButton class="yy" value="USER " action="UserRegForm.xhtml"/> 
+                    <p:commandButton class="yy" value="ASSOCIATION " action="AssociationRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="MOTO " action="MotoRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="MOTARD " action="MotardRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="UMUSANZU " action="UmusanzuRegForm2.xhtml"/> 
+                    <p:commandButton class="yy" value="LOG OUT " action="Login.xhtml" onclick=" return confirm('Are you sure to Logout of the System?}')"/> 
+
+                </h:form>
+
+                <h1>UMUSANZU PAYMENT FORM:</h1>
+
+                <h:form id="one">
+                    <p:growl id="msg"/>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="UWISHYURA"/>
+                        <p:inputText value="#{um2.umus.uwishyura}" required="true" requiredMessage="Enter NAMES:"/>
+                        <p:outputLabel value="Amount"/>
+                        <p:inputText value="#{um2.umus.amount}" required="true" requiredMessage="Enter Amount"/>
+
+                        <p:outputLabel value="Permit Number"/>
+                        <h:selectOneMenu value="#{um2.selectedMotard}">
+                            <f:selectItem itemLabel="--Select Permit No--"  noSelectionOption="true"/>
+                            <f:selectItems  value="#{um2.motard}"  var="motardList" 
+                                            itemLabel="#{motardList.permit_no}" itemLabelEscaped="true"  itemValue="#{motardList.permit_no}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Plate No"/>
+                        <p:inputText value="#{um2.umus.plateNo}" required="true" requiredMessage="Enter Receiver name"/>
+                        <p:outputLabel value="Receiver"/>
+                        <p:inputText value="#{um2.umus.receiver}" required="true" requiredMessage="Enter Receiver name"/>
+
+
+                        &nbsp;  <p:commandButton update="@all" value="Register Umusanzu" action="#{um2.registerUmusanzu()}"/>
+                    </p:panelGrid>
+
+                </h:form>
+                <br/>
+            </div>
+           
+                
+               
+                
+                  <h:form id="ff">
+                    <h2>LIST OF UMUSANZU:</h2>
+                    <br/>
+                   <h:commandButton style="width: 10%;height:40px; background: #ff6315;" value="Daily Report" action="UmusoroReport.jsp"/>
+                     &nbsp; <h:commandButton style="width: 10%;height:40px; background: #ff6315;" value="Mounthly Report" action="UmusoroReport_1.jsp"/>
+                    &nbsp;   <p:inputText value="#{um2.skey}" placeholder="Search..." style="width: 20%">
+                        <p:ajax event="keyup"  listener="#{um2.serchUmusanzu()}" update="tab"/>
+                    </p:inputText>
+
+
+                    <p:dataTable id="tab" value="#{um2.listUmusanzu}"  var="s">
+
+                        <p:column headerText="#" style="width: 20px">        
+                            <h:outputText value="#{um2.listUmusanzu.indexOf(s)+1}"/>
+                        </p:column>
+                        <p:column headerText="Motard Permit No">        
+                            #{s.motari} 
+                        </p:column>
+                        <p:column headerText="Motard Names">        
+                            #{s.motari.fname}  #{s.motari.lname} 
+                        </p:column>
+
+                        <p:column headerText="Plate No">        
+                            <h:outputText value="#{s.plateNo}"/>
+                        </p:column>
+                        <p:column headerText="Association">        
+                            <h:outputText value="#{s.motari.motoo.association}"/>
+                        </p:column>
+                        <p:column headerText="Deposit Date">        
+                            #{s.formatDeposDate()}
+                        </p:column>
+
+                        <p:column headerText="Uwishyuye">        
+                            <h:outputText value="#{s.uwishyura}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Amount" style="font-style: oblique; font-family: Arial ;width: 15%; color:ghostwhite ; background: coral; font-weight: bold; font-size:20px ; text-align: right; ">
+                      #{s.decAmount()}
+
+                      <f:facet name="footer">
+                                <c:set var="total" value=""/>
+                                Total &nbsp; =#{um2.decTotalFormat()}
+                            </f:facet>
+                        </p:column>
+                        <span id="val"></span>
+
+                    </p:dataTable>
+                </h:form>
+                
+                
+                
+            
+            <div style="background: #ff6315; height: 30px; text-align: center;" class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-text pull-left">
+                        <p>CopyRight©2017</p>
+                    </div>
+                </div>
+            </div>
+           
+        </center>
+    </h:body>
+</html>
+

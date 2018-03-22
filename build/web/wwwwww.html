@@ -1,0 +1,122 @@
+<ui:decorate template="/resources/Template.xhtml">
+    <ui:define id="content" name="content">
+        <p:growl id="war"/>
+        <style type="text/css">
+            .ok{  
+                color: #336600
+            }
+            .erro{
+                color: #D20005;
+            }
+        </style>
+        <div style="width: 90%; margin-left: auto; margin-right: auto; ">
+            <br/>
+            <br/>
+            <p:panel>
+                <f:facet name="header">
+                    Lista de Arquivos Armazenados                        
+                </f:facet>       
+                <h:form id="pesquisar">
+                    <p:toolbar style="width: 100%;">
+                        <p:toolbarGroup align="left" >
+                            <h:panelGrid columns="1" cellpadding="0">                            
+                            </h:panelGrid>
+                        </p:toolbarGroup>                        
+                        <p:toolbarGroup align="right">
+                            <h:panelGrid columns="5" cellpadding="0">
+                                <h:outputLabel value="De: "/>  
+                                <p:inputMask mask="99/99/9999" value="#{arquivoBean.dataInicial}" size="10"/>
+                                <h:outputLabel value="Até: "/>  
+                                <p:inputMask mask="99/99/9999" value="#{arquivoBean.datafinal}" size="10"/>
+                                <p:commandButton value="Buscar" action="#{arquivoBean.listar()}"  ajax="false"/>
+                                <br/>
+                                <p:selectBooleanCheckbox id="check" value="#{arquivoBean.pendente}"
+                                                         itemLabel="Pendente">
+                                    <p:ajax process="@this" event="change" listener="#{arquivoBean.listarPendente()}" />
+                                </p:selectBooleanCheckbox>
+                            </h:panelGrid>
+
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </h:form>
+            </p:panel>
+            <br/>
+            <p:dataTable id="dataTable"
+                         var="Arquivo"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         rowsPerPageTemplate="100"
+                         rows="100"
+                         sortBy="#{Arquivo.id}"
+                         value="#{arquivoBean.dataModelArquivo}"  
+                         rowStyleClass="#{Arquivo.pendente eq 1 ? 'ok' : 'erro'}"
+                         emptyMessage="Você ainda não ativou uma empresa ou não existe postagem para esta Empresa">
+                <p:column headerText="ID">
+                    #{Arquivo.id}
+                </p:column>
+                <p:column headerText="Nome">
+                    #{Arquivo.nomeMury}
+                </p:column>
+                <p:column headerText="Envio">
+                    #{Arquivo.dataEnvio}
+                </p:column>
+                <p:column headerText="Produto" width="10px;">
+                    <h:form id="formProduto">
+                        <p:commandButton icon="ui-icon-circle-zoomout" value="" 
+                                         action="#{arquivoBean.listarProdutoPorArquivo()}" 
+                                         oncomplete="prodDialog.show()"
+                                         onclick="listarProd([{name: 'ArquivoId', value:#{Arquivo.id}}]);">
+                            <f:setPropertyActionListener value="#{Arquivo}" target="#{arquivoBean.arquivo}"/>
+                        </p:commandButton>
+                        <p:remoteCommand name="listarProd" action="#{arquivoBean.listarProdutoPorArquivo()}" update=":formDataTable:dataTableProd">
+                            <f:setPropertyActionListener value="#{Arquivo}" target="#{arquivoBean.arquivo}"/>
+                        </p:remoteCommand>
+                    </h:form>
+                </p:column>
+                <p:column headerText="Data" width="10px;">
+                    <h:form id="formData">
+
+                        <p:inputMask id="entrada#{cc.clientId}" mask="99/99/9999" value="#{Arquivo.dataEntrada}"
+                                     onkeypress="if (event.keyCode === 13) {
+                                                     test([{name: 'rowIndex', value:#{Arquivo.id}}]);
+                                                     return;
+                                                 }"
+                                     size="8">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="GMT-03:00"/>
+                        </p:inputMask>
+                        <p:remoteCommand name="test" action="#{arquivoBean.inserirDataNota()}">
+                            <f:setPropertyActionListener value="#{Arquivo}" target="#{arquivoBean.arquivo}"/>
+                        </p:remoteCommand>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
+            <h:form id="formDataTable">
+                <p:dialog closeOnEscape="true" 
+                          widgetVar="prodDialog" 
+                          modal="true" 
+                          header="Lista de Produtos da NF-e"
+                          style="width: 300; height: 500"
+                          position="center">
+                    <p:dataTable
+                        id="dataTableProd"
+                        var="XmlItens"
+                        paginator="true"
+                        paginatorPosition="bottom"
+                        rowsPerPageTemplate="10"
+                        rows="10"
+                        value="#{arquivoBean.listaProd}">
+                        <p:column headerText="ID">
+                            #{XmlItens.id}
+                        </p:column>
+                        <p:column headerText="Nome">
+                            #{XmlItens.descricaoProd}
+                        </p:column>
+                        <p:column headerText="Envio">
+                            #{XmlItens.chaveNfe}
+                        </p:column>
+                    </p:dataTable>
+                </p:dialog>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:decorate>

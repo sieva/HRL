@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title></title>
+        <style>
+            tr{ margin-bottom: 5px;
+                margin-bottom: 5px}
+            input [select] { margin-bottom: 5px}
+
+
+        </style>
+
+    </h:head>
+    <h:body>
+        <h2>LIST OF MOTARDS REGISTERED:</h2>
+                
+        <h:form>
+
+            <p:inputText value="#{mo.skey}" placeholder="Search...">
+                <p:ajax event="keyup"  listener="#{mo.serchMotard()}" update="tab"/>
+
+            </p:inputText>
+            <p:messages closable="true" showIcon="true"/>
+            <p:dataTable id="tab" value="#{mo.listMotard}"  var="s">
+                
+                <p:column headerText="#" style="width: 4px">        
+                    <h:outputText value="#{mo.listMotard.indexOf(s)+1}"/>
+                </p:column>
+                <p:column headerText="Permit No">        
+                    <h:outputText value="#{s.permit_no}"/>
+                </p:column>
+
+                <p:column headerText="Names">        
+                    #{s.fname} #{s.lname}
+                </p:column>
+                <p:column headerText="Gender">        
+                    <h:outputText value="#{s.gender}"/>
+                </p:column>
+
+                <p:column headerText="Plate no">        
+                    <h:outputText value="#{s.motoo}"/>
+                </p:column>
+
+                <p:column headerText="Reg Date">        
+                    #{s.formatRegDate()}
+                </p:column>
+                <p:column headerText="Phone">        
+                    <h:outputText value="#{s.phone}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
